@@ -249,7 +249,7 @@ class EventInitialize extends SplBean
                     $this->mysqlOnQueryFunc['_save_sql']($sql);
                 } else {
                     /** @var \App\Model\Account\LogSql $Log */
-                    $Log = model_account('LogSql');
+                    $Log = model_admin('LogSql');
                     $Log->sqlWriteLog($sql);
                 }
 

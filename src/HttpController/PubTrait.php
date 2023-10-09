@@ -14,7 +14,7 @@ trait PubTrait
 {
     protected function instanceModel()
     {
-        $this->Model = model_account('Admin');
+        $this->Model = model_admin('Admin');
         return true;
     }
 
