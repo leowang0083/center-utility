@@ -65,7 +65,7 @@ trait AuthTrait
     protected function _getEntityData($id = 0)
     {
         /** @var AbstractModel $Admin */
-        $Admin = model_account('Admin');
+        $Admin = model_admin('Admin');
         // 当前用户信息
         return $Admin->where('id', $id)->get();
     }
@@ -222,7 +222,7 @@ trait AuthTrait
         $fullPath = "/$currentClassName/$currentAction";
 
         /** @var AbstractModel $Menu */
-        $Menu = model_account('Menu');
+        $Menu = model_admin('Menu');
         // 设置用户权限
         $userMenu = $this->getUserMenus();
         if ( ! is_null($userMenu)) {
