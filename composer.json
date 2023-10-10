@@ -32,7 +32,7 @@
     },
     "autoload": {
         "psr-4": {
-            "WonderGame\\CenterUtility\\": "src",
+            "Yizuan\\CenterUtility\\": "src",
             "Tests\\": "tests/"
         }
     },
