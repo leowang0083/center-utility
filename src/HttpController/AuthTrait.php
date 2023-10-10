@@ -186,6 +186,7 @@ trait AuthTrait
 
         // 关联的分组信息
         $this->operinfo = $this->_operinfo($data);
+        print_R($this->operinfo);
 
         // 将管理员信息挂载到Request
         CtxRequest::getInstance()->withOperinfo($this->operinfo);
@@ -216,6 +217,7 @@ trait AuthTrait
         $publicMethods = $this->getAllowMethods('strtolower');
 
         $currentAction = strtolower($this->getActionName());
+
         if ( ! in_array($currentAction, $publicMethods)) {
             $this->error(Code::CODE_FORBIDDEN);
             return false;
@@ -228,6 +230,9 @@ trait AuthTrait
 
         // 设置用户权限
         $userMenu = $this->getUserMenus();
+        print_R([
+            $userMenu
+        ]);
         if ( ! is_null($userMenu)) {
             if (empty($userMenu)) {
                 $this->error(Code::CODE_FORBIDDEN);
@@ -239,6 +244,7 @@ trait AuthTrait
         $priv = $Menu->where(['permission' => ['', '<>'], 'status' => 1])
             ->where("FIND_IN_SET('{$this->sub}', sub) > 0")
             ->column('permission');
+
         if (empty($priv)) {
             return true;
         }

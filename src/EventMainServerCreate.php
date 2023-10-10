@@ -295,7 +295,7 @@ class EventMainServerCreate extends SplBean
                     'servname' => $servname,
                     'servername' => $servername,
                     'pid' => $pid,
-                    'instime' => date("Y-m-d H:i:s"),
+                    'instime' => time(),
                 ];
                 // 进程信息
                 $info['process'] = \EasySwoole\Component\Process\Manager::getInstance()->info($pid)[$pid];

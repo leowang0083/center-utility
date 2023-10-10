@@ -30,7 +30,13 @@ if ( ! function_exists('is_super')) {
      */
     function is_super($rid = null)
     {
+        print_R([
+            1,2,3,4,45,6
+        ]);
         $super = sysinfo('super');
+        print_R([
+            '$super'=> $super
+        ]);
         return $super && is_array($super) && in_array($rid, $super);
     }
 }
