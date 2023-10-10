@@ -14,7 +14,7 @@ trait PubTrait
 {
     protected function instanceModel()
     {
-        $this->Model = model_admin('Admin');
+        $this->Model = model_admin('account');
         return true;
     }
 
@@ -33,14 +33,12 @@ trait PubTrait
 
 		// 查询记录
 		$data = $this->Model->where('username', $array['username'])->get();
-
-		if (empty($data) || ! password_verify($array['password'], $data['password'])) {
-			throw new HttpParamException(lang(Dictionary::ADMIN_PUBTRAIT_4));
+        if (empty($data) || ! password_verify($array['password'], $data['password'])) {
+            throw new HttpParamException(lang(Dictionary::ADMIN_PUBTRAIT_4));
 		}
+        $data = $data->toArray();
 
-		$data = $data->toArray();
-
-		// 被锁定
+        // 被锁定
 		if (empty($data['status']) && ( ! is_super($data['rid']))) {
 			throw new HttpParamException(lang(Dictionary::ADMIN_PUBTRAIT_2));
 		}
@@ -53,8 +51,9 @@ trait PubTrait
 
 		$request = CtxRequest::getInstance()->request;
 		$this->Model->signInLog([
-			'admid' => $data['id'],
+			'aid' => $data['id'],
 			'name' => $data['realname'] ?: $data['username'],
+            'updtime'=> date('Y-m-d H:i:s', time()),
 			'ip' => ip($request),
 		]);
 

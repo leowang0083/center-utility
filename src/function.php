@@ -700,7 +700,7 @@ if ( ! function_exists('sysinfo')) {
     function sysinfo($key = null, $default = null)
     {
         /** @var \App\Model\Account\Sysinfo $model */
-        $model = model_account('sysinfo');
+        $model = model_admin('sysinfo');
         return $model->cacheSpl($key, $default);
     }
 }

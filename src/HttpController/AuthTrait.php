@@ -65,7 +65,7 @@ trait AuthTrait
     protected function _getEntityData($id = 0)
     {
         /** @var AbstractModel $Admin */
-        $Admin = model_admin('Admin');
+        $Admin = model_admin('account');
         // 当前用户信息
         return $Admin->where('id', $id)->get();
     }
@@ -173,6 +173,7 @@ trait AuthTrait
 
         // 当前用户信息
         $data = $this->_getEntityData($id);
+
         if (empty($data)) {
             $this->error(Code::CODE_UNAUTHORIZED, Dictionary::ADMIN_AUTHTRAIT_3);
             return false;
@@ -188,6 +189,7 @@ trait AuthTrait
 
         // 将管理员信息挂载到Request
         CtxRequest::getInstance()->withOperinfo($this->operinfo);
+
         return $this->checkAuth();
     }
 
@@ -223,6 +225,7 @@ trait AuthTrait
 
         /** @var AbstractModel $Menu */
         $Menu = model_admin('Menu');
+
         // 设置用户权限
         $userMenu = $this->getUserMenus();
         if ( ! is_null($userMenu)) {
@@ -273,7 +276,6 @@ trait AuthTrait
 
         // 自定义认证操作
         $this->setPolicy($policy);
-
         $ok = $policy->check($fullPath) === PolicyNode::EFFECT_ALLOW;
         if ( ! $ok) {
             $this->error(Code::CODE_FORBIDDEN);
