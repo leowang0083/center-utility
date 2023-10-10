@@ -1,6 +1,6 @@
 <?php
 
-namespace WonderGame\CenterUtility\Consumer;
+namespace Yizuan\CenterUtility\Consumer;
 
 use EasySwoole\ORM\AbstractModel;
 

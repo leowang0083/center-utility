@@ -10,16 +10,16 @@ use EasySwoole\ORM\DbManager;
 use EasySwoole\ORM\AbstractModel;
 use EasySwoole\ORM\Db\MysqliClient;
 
-use WonderGame\EsNotify\DingTalk\Message\Markdown;
-use WonderGame\EsNotify\DingTalk\Message\Text;
-use WonderGame\EsNotify\EsNotify;
-use WonderGame\EsNotify\WeChat\Message\Notice;
-use WonderGame\EsNotify\WeChat\Message\Warning;
-use WonderGame\CenterUtility\Common\Classes\LamJwt;
-use WonderGame\CenterUtility\Common\Classes\Mysqli;
-use WonderGame\CenterUtility\Common\Exception\HttpParamException;
-use WonderGame\CenterUtility\Common\Http\Code;
-use WonderGame\CenterUtility\HttpTracker\Index as HttpTracker;
+use Yizuan\EsNotify\DingTalk\Message\Markdown;
+use Yizuan\EsNotify\DingTalk\Message\Text;
+use Yizuan\EsNotify\EsNotify;
+use Yizuan\EsNotify\WeChat\Message\Notice;
+use Yizuan\EsNotify\WeChat\Message\Warning;
+use Yizuan\CenterUtility\Common\Classes\LamJwt;
+use Yizuan\CenterUtility\Common\Classes\Mysqli;
+use Yizuan\CenterUtility\Common\Exception\HttpParamException;
+use Yizuan\CenterUtility\Common\Http\Code;
+use Yizuan\CenterUtility\HttpTracker\Index as HttpTracker;
 
 
 if ( ! function_exists('is_super')) {
@@ -406,7 +406,7 @@ if ( ! function_exists('ip')) {
     {
         // Request继承 \EasySwoole\Http\Message\Message 皆可
         if ( ! $Request instanceof \EasySwoole\Http\Request) {
-            $Request = \WonderGame\CenterUtility\Common\Classes\CtxRequest::getInstance()->request;
+            $Request = \Yizuan\CenterUtility\Common\Classes\CtxRequest::getInstance()->request;
             if (empty($Request)) {
                 return false;
             }

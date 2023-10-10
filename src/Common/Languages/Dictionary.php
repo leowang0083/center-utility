@@ -1,7 +1,7 @@
 <?php
 
 
-namespace WonderGame\CenterUtility\Common\Languages;
+namespace Yizuan\CenterUtility\Common\Languages;
 
 use EasySwoole\I18N\AbstractDictionary;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace WonderGame\CenterUtility\Common\Exception;
+namespace Yizuan\CenterUtility\Common\Exception;
 
-use WonderGame\CenterUtility\Common\Http\Code;
+use Yizuan\CenterUtility\Common\Http\Code;
 
 /**
  * 同步失败异常

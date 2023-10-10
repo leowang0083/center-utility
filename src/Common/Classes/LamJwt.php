@@ -6,7 +6,7 @@
  * @version 1.0.2 最后修改时间 2020年10月21日
  */
 
-namespace WonderGame\CenterUtility\Common\Classes;
+namespace Yizuan\CenterUtility\Common\Classes;
 
 use EasySwoole\Jwt\Jwt;
 

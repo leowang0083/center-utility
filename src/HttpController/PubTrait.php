@@ -1,11 +1,11 @@
 <?php
 
 
-namespace WonderGame\CenterUtility\HttpController;
+namespace Yizuan\CenterUtility\HttpController;
 
-use WonderGame\CenterUtility\Common\Classes\CtxRequest;
-use WonderGame\CenterUtility\Common\Exception\HttpParamException;
-use WonderGame\CenterUtility\Common\Languages\Dictionary;
+use Yizuan\CenterUtility\Common\Classes\CtxRequest;
+use Yizuan\CenterUtility\Common\Exception\HttpParamException;
+use Yizuan\CenterUtility\Common\Languages\Dictionary;
 
 /**
  * @property \App\Model\Admin\Admin $Model

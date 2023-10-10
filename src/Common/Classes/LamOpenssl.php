@@ -4,7 +4,7 @@
  */
 
 
-namespace WonderGame\CenterUtility\Common\Classes;
+namespace Yizuan\CenterUtility\Common\Classes;
 
 use EasySwoole\Component\Singleton;
 

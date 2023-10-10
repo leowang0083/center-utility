@@ -1,6 +1,6 @@
 <?php
 
-namespace WonderGame\CenterUtility;
+namespace Yizuan\CenterUtility;
 
 use EasySwoole\Command\Color;
 use EasySwoole\EasySwoole\Command\Utility;
@@ -11,8 +11,8 @@ use EasySwoole\Redis\Redis;
 use EasySwoole\RedisPool\RedisPool;
 use EasySwoole\Socket\AbstractInterface\ParserInterface;
 use EasySwoole\Spl\SplBean;
-use WonderGame\EsNotify\EsNotify;
-use WonderGame\EsNotify\Interfaces\ConfigInterface;
+use Yizuan\EsNotify\EsNotify;
+use Yizuan\EsNotify\Interfaces\ConfigInterface;
 
 class EventMainServerCreate extends SplBean
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace WonderGame\CenterUtility\WebSocket;
+namespace Yizuan\CenterUtility\WebSocket;
 
 use EasySwoole\EasySwoole\ServerManager;
 use EasySwoole\Socket\AbstractInterface\ParserInterface;

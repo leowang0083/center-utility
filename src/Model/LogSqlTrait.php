@@ -1,11 +1,11 @@
 <?php
 
 
-namespace WonderGame\CenterUtility\Model;
+namespace Yizuan\CenterUtility\Model;
 
 
 use EasySwoole\Mysqli\QueryBuilder;
-use WonderGame\CenterUtility\Common\Classes\CtxRequest;
+use Yizuan\CenterUtility\Common\Classes\CtxRequest;
 
 trait LogSqlTrait
 {

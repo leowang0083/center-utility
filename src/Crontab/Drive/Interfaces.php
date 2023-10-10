@@ -1,6 +1,6 @@
 <?php
 
-namespace WonderGame\CenterUtility\Crontab\Drive;
+namespace Yizuan\CenterUtility\Crontab\Drive;
 
 interface Interfaces
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace WonderGame\CenterUtility\Common\Http;
+namespace Yizuan\CenterUtility\Common\Http;
 
 use EasySwoole\Http\Message\Status;
 

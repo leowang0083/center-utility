@@ -1,8 +1,8 @@
 <?php
 
-namespace WonderGame\CenterUtility\HttpController;
+namespace Yizuan\CenterUtility\HttpController;
 
-use WonderGame\CenterUtility\Common\Exception\HttpParamException;
+use Yizuan\CenterUtility\Common\Exception\HttpParamException;
 
 /**
  * @property \App\Model\Admin\Sysinfo $Model

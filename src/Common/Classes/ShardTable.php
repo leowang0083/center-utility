@@ -8,7 +8,7 @@
  *
  */
 
-namespace WonderGame\CenterUtility\Common\Classes;
+namespace Yizuan\CenterUtility\Common\Classes;
 
 use EasySwoole\Mysqli\QueryBuilder;
 use EasySwoole\Spl\SplBean;

@@ -1,7 +1,7 @@
 <?php
 
 
-namespace WonderGame\CenterUtility\Model;
+namespace Yizuan\CenterUtility\Model;
 
 
 use EasySwoole\Mysqli\QueryBuilder;

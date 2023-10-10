@@ -1,6 +1,6 @@
 <?php
 
-namespace WonderGame\CenterUtility\Model;
+namespace Yizuan\CenterUtility\Model;
 
 use EasySwoole\ORM\AbstractModel;
 use EasySwoole\ORM\DbManager;

@@ -1,13 +1,13 @@
 <?php
 
-namespace WonderGame\CenterUtility\HttpController;
+namespace Yizuan\CenterUtility\HttpController;
 
 use EasySwoole\EasySwoole\Core;
 use EasySwoole\Http\AbstractInterface\Controller;
-use WonderGame\CenterUtility\Common\Exception\HttpParamException;
-use WonderGame\CenterUtility\Common\Exception\WarnException;
-use WonderGame\CenterUtility\Common\Http\Code;
-use WonderGame\CenterUtility\Common\Languages\Dictionary;
+use Yizuan\CenterUtility\Common\Exception\HttpParamException;
+use Yizuan\CenterUtility\Common\Exception\WarnException;
+use Yizuan\CenterUtility\Common\Http\Code;
+use Yizuan\CenterUtility\Common\Languages\Dictionary;
 
 /**
  * @extends Controller
@@ -132,7 +132,7 @@ trait BaseControllerTrait
         } elseif ($throwable instanceof WarnException) {
             $message = $throwable->getMessage();
             $task = \EasySwoole\EasySwoole\Task\TaskManager::getInstance();
-            $task->async(new \WonderGame\CenterUtility\Task\Error(
+            $task->async(new \Yizuan\CenterUtility\Task\Error(
                     [
                         'message' => $message,
                         'file' => $throwable->getFile(),

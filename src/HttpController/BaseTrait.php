@@ -1,10 +1,10 @@
 <?php
 
-namespace WonderGame\CenterUtility\HttpController;
+namespace Yizuan\CenterUtility\HttpController;
 
 use EasySwoole\ORM\AbstractModel;
-use WonderGame\CenterUtility\Common\Classes\DateUtils;
-use WonderGame\CenterUtility\Common\Http\Code;
+use Yizuan\CenterUtility\Common\Classes\DateUtils;
+use Yizuan\CenterUtility\Common\Http\Code;
 
 /**
  * @extends BaseControllerTrait

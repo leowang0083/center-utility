@@ -1,7 +1,7 @@
 <?php
 
 
-namespace WonderGame\CenterUtility\Crontab;
+namespace Yizuan\CenterUtility\Crontab;
 
 use Cron\CronExpression;
 use EasySwoole\EasySwoole\Crontab\AbstractCronTask;
@@ -9,9 +9,9 @@ use EasySwoole\EasySwoole\Task\TaskManager;
 use EasySwoole\Task\AbstractInterface\TaskInterface;
 use EasySwoole\Utility\File;
 use EasySwoole\EasySwoole\Trigger;
-use WonderGame\CenterUtility\Crontab\Drive\Interfaces;
-use WonderGame\CenterUtility\Crontab\Drive\Mysql;
-use WonderGame\CenterUtility\Task\Crontab as CrontabTemplate;
+use Yizuan\CenterUtility\Crontab\Drive\Interfaces;
+use Yizuan\CenterUtility\Crontab\Drive\Mysql;
+use Yizuan\CenterUtility\Task\Crontab as CrontabTemplate;
 
 class Crontab extends AbstractCronTask
 {

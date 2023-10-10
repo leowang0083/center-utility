@@ -1,8 +1,8 @@
 <?php
 
-namespace WonderGame\CenterUtility\Model;
+namespace Yizuan\CenterUtility\Model;
 
-use WonderGame\CenterUtility\Common\OrmCache\SplArray;
+use Yizuan\CenterUtility\Common\OrmCache\SplArray;
 
 trait SysinfoModelTrait
 {

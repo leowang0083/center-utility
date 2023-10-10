@@ -1,12 +1,12 @@
 <?php
 
-namespace WonderGame\CenterUtility\Task;
+namespace Yizuan\CenterUtility\Task;
 
 use EasySwoole\Mysqli\QueryBuilder;
 use EasySwoole\ORM\AbstractModel;
 use EasySwoole\ORM\DbManager;
 use EasySwoole\Task\AbstractInterface\TaskInterface;
-use WonderGame\CenterUtility\Common\Classes\CtxRequest;
+use Yizuan\CenterUtility\Common\Classes\CtxRequest;
 
 /**
  * 异步创建模型分表

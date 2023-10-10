@@ -1,7 +1,7 @@
 <?php
 
 
-namespace WonderGame\CenterUtility\Common\Classes;
+namespace Yizuan\CenterUtility\Common\Classes;
 
 
 class DateUtils

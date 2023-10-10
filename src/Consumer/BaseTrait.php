@@ -1,10 +1,10 @@
 <?php
 
-namespace WonderGame\CenterUtility\Consumer;
+namespace Yizuan\CenterUtility\Consumer;
 
 use EasySwoole\Redis\Redis;
 use EasySwoole\RedisPool\RedisPool;
-use WonderGame\CenterUtility\EventMainServerCreate;
+use Yizuan\CenterUtility\EventMainServerCreate;
 
 trait BaseTrait
 {

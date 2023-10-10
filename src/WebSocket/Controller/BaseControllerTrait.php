@@ -1,11 +1,11 @@
 <?php
 
-namespace WonderGame\CenterUtility\WebSocket\Controller;
+namespace Yizuan\CenterUtility\WebSocket\Controller;
 
 use EasySwoole\Socket\AbstractInterface\Controller;
 use EasySwoole\EasySwoole\ServerManager;
 use EasySwoole\Socket\Client\WebSocket;
-use WonderGame\CenterUtility\Common\Classes\CtxRequest;
+use Yizuan\CenterUtility\Common\Classes\CtxRequest;
 
 /**
  * @extends Controller

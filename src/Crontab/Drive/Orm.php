@@ -1,9 +1,9 @@
 <?php
 
-namespace WonderGame\CenterUtility\Crontab\Drive;
+namespace Yizuan\CenterUtility\Crontab\Drive;
 
 use EasySwoole\ORM\AbstractModel;
-use WonderGame\CenterUtility\Model\Admin\CrontabTrait;
+use Yizuan\CenterUtility\Model\Admin\CrontabTrait;
 
 class Orm implements Interfaces
 {

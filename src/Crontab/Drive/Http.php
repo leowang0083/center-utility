@@ -1,9 +1,9 @@
 <?php
 
-namespace WonderGame\CenterUtility\Crontab\Drive;
+namespace Yizuan\CenterUtility\Crontab\Drive;
 
 use EasySwoole\HttpClient\HttpClient;
-use WonderGame\CenterUtility\Common\Classes\LamOpenssl;
+use Yizuan\CenterUtility\Common\Classes\LamOpenssl;
 
 class Http implements Interfaces
 {

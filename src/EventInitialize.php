@@ -1,6 +1,6 @@
 <?php
 
-namespace WonderGame\CenterUtility;
+namespace Yizuan\CenterUtility;
 
 use EasySwoole\Component\Di;
 use EasySwoole\EasySwoole\Config;
@@ -12,10 +12,10 @@ use EasySwoole\ORM\DbManager;
 use EasySwoole\Spl\SplBean;
 use EasySwoole\Trigger\TriggerInterface;
 use EasySwoole\Utility\File;
-use WonderGame\CenterUtility\Common\Classes\CtxRequest;
-use WonderGame\CenterUtility\Common\Classes\ExceptionTrigger;
-use WonderGame\CenterUtility\Common\Classes\LamUnit;
-use WonderGame\CenterUtility\HttpTracker\Index as HttpTracker;
+use Yizuan\CenterUtility\Common\Classes\CtxRequest;
+use Yizuan\CenterUtility\Common\Classes\ExceptionTrigger;
+use Yizuan\CenterUtility\Common\Classes\LamUnit;
+use Yizuan\CenterUtility\HttpTracker\Index as HttpTracker;
 
 class EventInitialize extends SplBean
 {

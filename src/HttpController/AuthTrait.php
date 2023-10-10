@@ -1,6 +1,6 @@
 <?php
 
-namespace WonderGame\CenterUtility\HttpController;
+namespace Yizuan\CenterUtility\HttpController;
 
 use App\HttpController\BaseController;
 use EasySwoole\Component\Timer;
@@ -10,13 +10,13 @@ use EasySwoole\ORM\AbstractModel;
 use EasySwoole\Policy\Policy;
 use EasySwoole\Policy\PolicyNode;
 use EasySwoole\Utility\MimeType;
-use WonderGame\CenterUtility\Common\Classes\CtxRequest;
-use WonderGame\CenterUtility\Common\Classes\DateUtils;
-use WonderGame\CenterUtility\Common\Classes\LamJwt;
-use WonderGame\CenterUtility\Common\Classes\XlsWriter;
-use WonderGame\CenterUtility\Common\Exception\HttpParamException;
-use WonderGame\CenterUtility\Common\Http\Code;
-use WonderGame\CenterUtility\Common\Languages\Dictionary;
+use Yizuan\CenterUtility\Common\Classes\CtxRequest;
+use Yizuan\CenterUtility\Common\Classes\DateUtils;
+use Yizuan\CenterUtility\Common\Classes\LamJwt;
+use Yizuan\CenterUtility\Common\Classes\XlsWriter;
+use Yizuan\CenterUtility\Common\Exception\HttpParamException;
+use Yizuan\CenterUtility\Common\Http\Code;
+use Yizuan\CenterUtility\Common\Languages\Dictionary;
 
 /**
  * @extends BaseController

@@ -1,6 +1,6 @@
 <?php
 
-namespace WonderGame\CenterUtility\HttpController;
+namespace Yizuan\CenterUtility\HttpController;
 
 trait LogErrorTrait
 {
