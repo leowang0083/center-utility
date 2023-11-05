@@ -193,7 +193,7 @@ trait Strings
     {
         return RedisPool::invoke(function (Redis $redis) use ($id, $data, $bloom) {
             $key = $this->_getCacheKey($id);
-
+            
             if (is_array($id)) {
                 $pk = $this->_getPk();
                 if (is_array($data) && ! empty($data) && isset($data[$pk])) {
@@ -234,6 +234,7 @@ trait Strings
             }
 
             $key = $this->_getCacheKey($id);
+
             $data = $redis->get($key);
             // 存储的是主键,则使用主键再次获取
             if (is_string($data) && strpos($data, $this->primarySb) === 0) {
@@ -243,6 +244,7 @@ trait Strings
                 $data = $this->cacheGet(explode(':', $data)[1]);
                 $this->bloom = $bloom;
             }
+            
             // 没有数据，从数据表获取
             if (is_null($data) || $data === false) {
                 $data = $this->_getByUnique($id);

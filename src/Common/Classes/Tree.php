@@ -152,7 +152,8 @@ class Tree extends SplBean
                 $this->idKey => $value[$this->idKey],
                 $this->pidKey => $value[$this->pidKey],
             ];
-            foreach (['path', 'component', 'name', 'redirect',] as $col) {
+
+            foreach (['path', 'component', 'name', 'redirect', 'current_active_menu'] as $col) {
                 $row[$col] = $value[$col] ?? '';
             }
 
@@ -164,7 +165,8 @@ class Tree extends SplBean
                 'affix' => $value['affix'] == 1,
                 'icon' => $value['icon'],
                 'hideMenu' => $value['isshow'] != 1,
-                'hideBreadcrumb' => $value['breadcrumb'] != 1
+                'hideBreadcrumb' => $value['breadcrumb'] != 1,
+                'currentActiveMenu' => $value['current_active_menu'] ?? ''
             ];
             // 外部链接, isext=1为外链，=0为frameSrc
             $validate = new \EasySwoole\Validate\Validate();

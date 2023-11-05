@@ -47,6 +47,7 @@ trait AuthTrait
      * @var string
      */
     protected $sub = '';
+    protected $mid = 0;
 
     protected function onRequest(?string $action): ?bool
     {
@@ -58,6 +59,7 @@ trait AuthTrait
         }
 
         $this->isExport = $action === 'export';
+
         return $this->checkAuthorization();
     }
 
@@ -139,8 +141,9 @@ trait AuthTrait
             $this->error($result['code'] ?? Code::CODE_FORBIDDEN, $result['msg']);
             return false;
         }
-
+        
         $this->sub = $result['result']['sub'];
+        $this->mid = $result['result']['operinfo']['mid'];
         $this->operinfo = $result['result']['operinfo'];
         CtxRequest::getInstance()->withOperinfo($this->operinfo);
 
@@ -150,7 +153,9 @@ trait AuthTrait
     // 账号管理系统，本站权限认证
     protected function checkAuthorization()
     {
+        // 获取授权的 token
         $authorization = $this->getAuthorization();
+
         if ( ! $authorization) {
             $this->error(Code::CODE_UNAUTHORIZED, Dictionary::ADMIN_AUTHTRAIT_1);
             return false;
@@ -179,14 +184,15 @@ trait AuthTrait
             return false;
         }
 
-        if (empty($data['status']) && ( ! is_super($data['rid']))) {
+        // 判断是帐号是否禁用
+        if (empty($data['status'])) {
             $this->error(Code::ERROR_OTHER, Dictionary::ADMIN_AUTHTRAIT_4);
             return false;
         }
 
         // 关联的分组信息
         $this->operinfo = $this->_operinfo($data);
-        print_R($this->operinfo);
+        $this->mid = $this->operinfo['mid'];
 
         // 将管理员信息挂载到Request
         CtxRequest::getInstance()->withOperinfo($this->operinfo);
@@ -197,8 +203,12 @@ trait AuthTrait
     protected function _operinfo($data)
     {
         $relation = $data->relation ? $data->relation->toArray() : [];
+        // 获取主体信息
+        $mainInfo = $data->mainInfo ? $data->mainInfo->toArray() : [];
+
         $data = $data->toArray();
         $data['role'] = $relation;
+        $data['mainInfo'] = $mainInfo;
         return $data;
     }
 
@@ -210,10 +220,14 @@ trait AuthTrait
      */
     protected function checkAuth()
     {
+        // 如果是超级管理员，则不用测试
+        // is_super 使用的是不是 composer 中的配置
+
         if ($this->isSuper()) {
             return true;
         }
 
+        // 获取 类下的 plublic 方法
         $publicMethods = $this->getAllowMethods('strtolower');
 
         $currentAction = strtolower($this->getActionName());
@@ -222,6 +236,7 @@ trait AuthTrait
             $this->error(Code::CODE_FORBIDDEN);
             return false;
         }
+
         $currentClassName = strtolower($this->getStaticClassName());
         $fullPath = "/$currentClassName/$currentAction";
 
@@ -230,9 +245,7 @@ trait AuthTrait
 
         // 设置用户权限
         $userMenu = $this->getUserMenus();
-        print_R([
-            $userMenu
-        ]);
+
         if ( ! is_null($userMenu)) {
             if (empty($userMenu)) {
                 $this->error(Code::CODE_FORBIDDEN);
@@ -330,7 +343,9 @@ trait AuthTrait
         if ( ! isset($request[$pk]) || $request[$pk] === '') {
             throw new HttpParamException(lang(Dictionary::ADMIN_AUTHTRAIT_10));
         }
+
         $model = $this->Model->where($pk, $request[$pk])->get();
+
         if (empty($model)) {
             throw new HttpParamException(lang(Dictionary::ADMIN_AUTHTRAIT_11));
         }
@@ -353,6 +368,7 @@ trait AuthTrait
     public function _edit($return = false)
     {
         $pk = $this->Model->getPk();
+
         $model = $this->__getModel();
         $request = array_merge($this->get, $this->post);
 
@@ -379,14 +395,40 @@ trait AuthTrait
         return $return ? $model->toArray() : $this->success($model->toArray());
     }
 
+    public function _read($return = false)
+    {
+        $pk = $this->Model->getPk();
+        $model = $this->__getModel();
+        $result = $this->__after_read($model);
+        return $return ? $result : $this->success($result);
+    }
+
+    public function __after_read($data)
+    {
+        return $data->toArray();
+    }
+
     public function _del($return = false)
     {
-        $model = $this->__getModel();
-        $result = $model->destroy();
-        if ($return) {
-            return $model->toArray();
-        } else {
-            $result ? $this->success() : $this->error(Code::ERROR_OTHER, Dictionary::ADMIN_AUTHTRAIT_14);
+        try {
+            $model = $this->__getModel();
+
+            $deleteTime = $this->Model->getDeleteTime();
+
+            if($deleteTime) {
+                $result = $model->update([
+                    $deleteTime=> date('Y-m-d H:i:s')
+                ]) === false ? false : true;
+            } else {
+                $result = $model->destroy();
+            }
+            if ($return) {
+                return $model->toArray();
+            } else {
+                $result ? $this->success() : $this->error(Code::ERROR_OTHER, Dictionary::ADMIN_AUTHTRAIT_14);
+            }
+        } catch (\Exception $e) {
+            $this->success();
         }
     }
 
@@ -443,14 +485,19 @@ trait AuthTrait
         $this->__with();
         $where = $this->__search();
 
+        // 强制处理，软删除，只支持 ＤＡＴＡＴＩＭＥ
+        $deletTime = $this->Model->getDeleteTime();
+
+        if( !empty($deletTime) && !isset($where[$deletTime])) {
+            $where[$deletTime] = [NULL, 'IS'];
+        }
+
         // 处理排序
         $this->__order();
 
         $this->Model->scopeIndex();
-
         $this->Model->limit($limit * ($page - 1), $limit)->withTotalCount();
         $items = $this->Model->all($where);
-
         $result = $this->Model->lastQueryResult();
         $total = $result->getTotalCount();
 
@@ -579,7 +626,8 @@ trait AuthTrait
             $file->moveTo($fullPath);
 //            chmod($fullPath, 0777);
 
-            $url = $join . $fileName;
+            $assertUrl = config('DOMAIN_URL.assert');
+            $url = $assertUrl . $join . $fileName;
             $this->writeUpload($url);
         } catch (FileException $e) {
             $this->writeUpload('', Code::ERROR_OTHER, $e->getMessage());

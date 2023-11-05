@@ -33,6 +33,11 @@ trait BaseModelTrait
 	{
 	}
 
+    public function getDeleteTime()
+    {
+        return $this->deleteTime ?? NULL;
+    }
+
 	/**
 	 * 获取表名，并将将Java风格转换为C的风格
 	 * @return string
@@ -77,7 +82,7 @@ trait BaseModelTrait
 
 	protected function setInstimeAttr($instime, $all)
 	{
-		return is_numeric($instime) ? $instime : strtotime($instime);
+		return is_numeric($instime) ? date('Y-m-d H:i:s', $instime) : $instime;
 	}
 
 	public function scopeIndex()
@@ -150,4 +155,60 @@ trait BaseModelTrait
 	{
 		DbManager::getInstance()->rollback($this->getQueryConnection());
 	}
+
+
+    /**
+     * 重写 get 方法
+     * @param $where
+     * @return array|bool|AbstractModel|\EasySwoole\ORM\Db\Cursor|\EasySwoole\ORM\Db\CursorInterface|BaseModelTrait|null
+     * @throws \EasySwoole\Mysqli\Exception\Exception
+     * @throws \EasySwoole\ORM\Exception\Exception
+     * @throws \Throwable
+     */
+    public function get($where  = null)
+    {
+        $deleteTime = $this->getDeleteTime();
+        if($deleteTime && !isset($where[$deleteTime])) {
+            $where[$deleteTime] = [NULL, 'IS'];
+        }
+        return parent::get($where);
+    }
+
+    /**
+     * 原查询，不但软删除
+     * @param $where
+     * @return array|bool|AbstractModel|\EasySwoole\ORM\Db\Cursor|\EasySwoole\ORM\Db\CursorInterface|BaseModelTrait|null
+     * @throws \EasySwoole\Mysqli\Exception\Exception
+     * @throws \EasySwoole\ORM\Exception\Exception
+     * @throws \Throwable
+     */
+    public function rawGet($where  = null)
+    {
+        return parent::get($where);
+    }
+
+    /**
+     * 强制适配软件删除（不支持软件删除，就使用回硬删除）
+     * @param $where
+     * @param $allow
+     * @return mixed
+     */
+    public function softDestory($where = null, $allow = false){
+        $updateData = [];
+
+        $deleteTime = $this->getDeleteTime();
+        if($deleteTime && !isset($where[$deleteTime])) {
+            $updateData[$deleteTime] = date('Y-m-d H:i:s', time());
+        }
+
+        $originData = $this->getOriginData();
+        $pk = $this->getPk();
+
+        if($originData) {
+            $where[$pk] = $originData[$pk];
+        }
+
+        return $updateData ? $this->update($updateData, $where) : parent::destroy($where) ;
+    }
+
 }
