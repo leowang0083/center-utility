@@ -146,6 +146,13 @@ if ( ! function_exists('model_iot')) {
     }
 }
 
+if ( ! function_exists('model_carbon')) {
+    function model_carbon(string $name = '', array $data = [], $inject = false)
+    {
+        return model('Carbon\\' . ucfirst($name), $data, $inject);
+    }
+}
+
 if ( ! function_exists('config')) {
     /**
      * 获取和设置配置参数
