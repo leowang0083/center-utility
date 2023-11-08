@@ -228,6 +228,12 @@ trait BaseControllerTrait
         return end($array);
     }
 
+    protected function getStaticAppNameSpace()
+    {
+        $array = explode('\\', static::class);
+        return $array[count($array) - 2];
+    }
+
     protected function actionNotFoundName()
     {
         return $this->actionNotFoundPrefix . $this->getActionName();

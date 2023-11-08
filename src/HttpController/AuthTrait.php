@@ -96,6 +96,7 @@ trait AuthTrait
         }
 
         $currentClassName = strtolower($this->getStaticClassName());
+        $appName = strtolower($this->getStaticAppNameSpace());
         $fullPath = strtolower("/$currentClassName/$currentAction");
 
         $selfRef = new \ReflectionClass(self::class);
@@ -120,7 +121,7 @@ trait AuthTrait
             }
         }
 
-        $query['permCode'] = $fullPath;
+        $query['permCode'] =  '/' . $appName . $fullPath;
 
         $url = config('DOMAIN_URL.auth');
         if (empty($url)) {
@@ -398,12 +399,13 @@ trait AuthTrait
     public function _read($return = false)
     {
         $pk = $this->Model->getPk();
+        $this->__with();
         $model = $this->__getModel();
         $result = $this->__after_read($model);
         return $return ? $result : $this->success($result);
     }
 
-    public function __after_read($data)
+    protected function __after_read($data)
     {
         return $data->toArray();
     }
@@ -633,6 +635,38 @@ trait AuthTrait
             $this->writeUpload('', Code::ERROR_OTHER, $e->getMessage());
         }
     }
+
+    /**
+     * 统一读取文件内容
+     * @return array
+     * @throws HttpParamException
+     */
+    public function _readExcel()
+    {
+        try {
+            /** @var \EasySwoole\Http\Message\UploadFile $file */
+            $file = $this->request()->getUploadedFile($this->uploadKey);
+            if(empty($file)) {
+                throw new HttpParamException( Dictionary::ADMIN_CARBON_2, Code::ERROR_OTHER);
+            }
+
+            $tempName = $file->getTempName();
+            $path = dirname($tempName);
+            $filename = basename($tempName);
+            $config = [
+                'path' => $path,
+            ];
+
+            $excel = new \Vtiful\Kernel\Excel($config);
+
+            return $excel->openFile($filename)
+                ->openSheet()
+                ->getSheetData();
+        } catch (\Exception $e) {
+            throw new HttpParamException($e->getMessage(),Code::ERROR_OTHER);
+        }
+    }
+
 
     public function unlink()
     {
