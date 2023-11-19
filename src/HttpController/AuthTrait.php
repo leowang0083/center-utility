@@ -356,7 +356,9 @@ trait AuthTrait
 
     public function _add($return = false)
     {
+
         if ($this->isHttpPost()) {
+            $this->__checkValidate($this->post);
             $result = $this->Model->data($this->post)->save();
             if ($return) {
                 return $result;
@@ -374,7 +376,7 @@ trait AuthTrait
         $request = array_merge($this->get, $this->post);
 
         if ($this->isHttpPost()) {
-
+            $this->__checkValidate($request);
             $where = null;
             // 单独处理id为0值的情况，因为update传where后，data不会取差集，会每次update所有字段, 而不传$where时会走进preSetWhereFromExistModel用empty判断主键，0值会报错
             if (intval($request[$pk]) === 0) {
@@ -751,5 +753,41 @@ trait AuthTrait
             ];
         }
         return $return ? $result : $this->success($result);
+    }
+
+    /**
+     * 获取检验器
+     * @return void
+     */
+    protected function __getValidate()
+    {
+        list($name, $type, $app, $controller) = explode('\\', static::class);
+        $className = implode('\\', [$name, 'Validate', $app, ucfirst($controller) . 'Validate']);
+        if(class_exists($className)) {
+            $v =  new $className();
+            // 方法名即可为场景，当场景值存在才会操作
+            $scene = trim($this->getActionName(), '_');
+            if($v->hasScene($scene)) {
+                return $v->scene($scene);
+            }
+            return false;
+        }
+        return false;
+    }
+
+    /**
+     * 统一检测所有传入的数据
+     * @param $data
+     * @return void
+     */
+    protected function __checkValidate($data = [])
+    {
+        $validate = $this->__getValidate();
+        if(empty($data)) {
+            $data = array_merge($this->get, $this->post);
+        }
+        if($data && $validate && !$validate->check($data)) {
+            throw new HttpParamException($validate->getError(),Code::ERROR_OTHER);
+        }
     }
 }

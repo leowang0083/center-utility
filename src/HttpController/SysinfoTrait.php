@@ -47,4 +47,5 @@ trait SysinfoTrait
 			throw new HttpParamException('Params invalid');
 		}
 	}
+
 }

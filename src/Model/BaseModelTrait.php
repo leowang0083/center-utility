@@ -175,7 +175,7 @@ trait BaseModelTrait
     }
 
     /**
-     * 原查询，不但软删除
+     * 原查询
      * @param $where
      * @return array|bool|AbstractModel|\EasySwoole\ORM\Db\Cursor|\EasySwoole\ORM\Db\CursorInterface|BaseModelTrait|null
      * @throws \EasySwoole\Mysqli\Exception\Exception

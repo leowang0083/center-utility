@@ -117,4 +117,6 @@ class Dictionary extends AbstractDictionary
 
     const ADMIN_CARBON_1 = 'ADMIN_CARBON_1';
     const ADMIN_CARBON_2 = 'ADMIN_CARBON_2';
+    const ADMIN_CARBON_3 = 'ADMIN_CARBON_3';
+    const ADMIN_CARBON_4 = 'ADMIN_CARBON_4';
 }
