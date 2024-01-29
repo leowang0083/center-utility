@@ -11,6 +11,12 @@ class Code extends Status
 
 	// 温柔刷新
 	const VERSION_LATER = 1001;
-	// 强制刷新
-	const VERSION_FORCE = 1002;
+    // 强制刷新
+    const VERSION_FORCE = 1002;
+
+
+    // 调试员为空
+    const DEBUGGER_NULL = 2000;
+    // 多个调试员
+    const DEBUGGER_MUTIPL = 2001;
 }

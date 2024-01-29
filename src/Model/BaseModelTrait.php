@@ -196,16 +196,6 @@ trait BaseModelTrait
         return parent::all($where);
     }
 
-    public function softIndexBy(string $column)
-    {
-        $deleteTime = $this->getDeleteTime();
-        if($deleteTime && !isset($where[$deleteTime] )) {
-            $where[$deleteTime] = [NULL, 'IS'];
-        }
-        return parent::indexBy($column);
-    }
-
-
     /**
      * 强制适配软件删除（不支持软件删除，就使用回硬删除）
      * @param $where

@@ -48,6 +48,7 @@ trait AuthTrait
      */
     protected $sub = '';
     protected $mid = 0;
+    protected $uid = 0;
 
     protected function onRequest(?string $action): ?bool
     {
@@ -145,6 +146,7 @@ trait AuthTrait
         
         $this->sub = $result['result']['sub'];
         $this->mid = $result['result']['operinfo']['mid'];
+        $this->uid = $result['result']['operinfo']['id'];
         $this->operinfo = $result['result']['operinfo'];
         CtxRequest::getInstance()->withOperinfo($this->operinfo);
 
@@ -194,6 +196,7 @@ trait AuthTrait
         // 关联的分组信息
         $this->operinfo = $this->_operinfo($data);
         $this->mid = $this->operinfo['mid'];
+        $this->uid =  $this->operinfo['id'];
 
         // 将管理员信息挂载到Request
         CtxRequest::getInstance()->withOperinfo($this->operinfo);
@@ -345,6 +348,10 @@ trait AuthTrait
             throw new HttpParamException(lang(Dictionary::ADMIN_AUTHTRAIT_10));
         }
 
+        // 强制适配 > 1000 加 mid条件
+        if($this->mid > 1000) {
+            $this->Model->where('mid', $this->mid);
+        }
         $model = $this->Model->where($pk, $request[$pk])->get();
 
         if (empty($model)) {
@@ -356,9 +363,7 @@ trait AuthTrait
 
     public function _add($return = false)
     {
-
         if ($this->isHttpPost()) {
-            $this->__checkValidate($this->post);
             $result = $this->Model->data($this->post)->save();
             if ($return) {
                 return $result;
@@ -376,7 +381,7 @@ trait AuthTrait
         $request = array_merge($this->get, $this->post);
 
         if ($this->isHttpPost()) {
-            $this->__checkValidate($request);
+
             $where = null;
             // 单独处理id为0值的情况，因为update传where后，data不会取差集，会每次update所有字段, 而不传$where时会走进preSetWhereFromExistModel用empty判断主键，0值会报错
             if (intval($request[$pk]) === 0) {
@@ -396,6 +401,11 @@ trait AuthTrait
         }
 
         return $return ? $model->toArray() : $this->success($model->toArray());
+    }
+
+    protected function __fields()
+    {
+        return "*";
     }
 
     public function _read($return = false)
@@ -498,10 +508,10 @@ trait AuthTrait
 
         // 处理排序
         $this->__order();
-
+        $fields = $this->__fields();
         $this->Model->scopeIndex();
         $this->Model->limit($limit * ($page - 1), $limit)->withTotalCount();
-        $items = $this->Model->all($where);
+        $items = $this->Model->field($fields)->all($where);
         $result = $this->Model->lastQueryResult();
         $total = $result->getTotalCount();
 
